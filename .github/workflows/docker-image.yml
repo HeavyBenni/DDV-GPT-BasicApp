@@ -29,8 +29,8 @@ jobs:
         ref: ${{ github.event.inputs.branch }}
     - name: Build the Docker image
       run:         
-        docker build . --file WebApp.Dockerfile --tag ddvgpt.azurecr.io/sample-app-aoai-chatgpt:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER;
-        docker tag ddvgpt.azurecr.io/sample-app-aoai-chatgpt:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER ddvgpt.azurecr.io/sample-app-aoai-chatgpt:latest;
-        docker push ddvgpt.azurecr.io/sample-app-aoai-chatgpt:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER;
-        docker push ddvgpt.azurecr.io/sample-app-aoai-chatgpt:latest;
+        docker build . --file WebApp.Dockerfile --tag ddvgpt.azurecr.io/DDV-GPT-BasicApp:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER;
+        docker tag ddvgpt.azurecr.io/DDV-GPT-BasicApp:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER ddvgpt.azurecr.io/DDV-GPT-BasicApp:latest;
+        docker push ddvgpt.azurecr.io/DDV-GPT-BasicApp:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER;
+        docker push ddvgpt.azurecr.io/DDV-GPT-BasicApp:latest;
       
