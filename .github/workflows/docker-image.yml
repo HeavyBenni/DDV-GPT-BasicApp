@@ -14,23 +14,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Azure Container Registry Login
-      uses: Azure/docker-login@v1
-      with:
-        # Container registry username
-        username: ${{ secrets.ACR_USERNAME }}
-        # Container registry password
-        password: ${{ secrets.ACR_PASSWORD }}
-        # Container registry server url
-        login-server: ${{ secrets.ACR_LOGIN_SERVER }}
-        
-    - uses: actions/checkout@v3
-      with:
-        ref: ${{ github.event.inputs.branch }}
-    - name: Build the Docker image
-      run:         
-        docker build . --file WebApp.Dockerfile --tag ddvgpt.azurecr.io/ddvgpt:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER;
-        docker tag ddvgpt.azurecr.io/ddvgpt:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER ddvgpt.azurecr.io/ddvgpt:latest;
-        docker push ddvgpt.azurecr.io/ddvgpt:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER;
-        docker push ddvgpt.azurecr.io/ddvgpt:latest;
+
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+  
+      - name: Build and deploy Container App
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }}/src
+          acrName: ddvgpt
+          containerAppName: ddvgpt.azurecr.io
+          resourceGroup: DDV-AI
       
